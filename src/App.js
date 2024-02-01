@@ -1,25 +1,15 @@
-// App.js
-
-import React, { useState } from "react";
+import React from "react";
 import ProfilePage from "./ProfilePage";
-import UpdatedProfilePage from "./UpdatedProfilePage";
 
 const App = () => {
-  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
-
-  const handleProfileUpdate = () => {
-    // Simulate updating the profile on the server
-    console.log("Profile updated!");
-    setIsProfileUpdated(true);
+  const handleProfileUpdate = (updatedProfile) => {
+    // Handle the updated profile data, e.g., send it to the server
+    console.log("Received updated profile:", updatedProfile);
   };
 
   return (
     <div>
-      {isProfileUpdated ? (
-        <UpdatedProfilePage />
-      ) : (
-        <ProfilePage onProfileUpdate={handleProfileUpdate} />
-      )}
+      <ProfilePage onProfileUpdate={handleProfileUpdate} />
     </div>
   );
 };

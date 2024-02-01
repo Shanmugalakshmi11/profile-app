@@ -1,13 +1,11 @@
-// UpdatedProfilePage.js
-
 import React from "react";
-import ProfilePage from "./ProfilePage";
+import ProfileCard from "./ProfileCard";
 
-const UpdatedProfilePage = () => {
+const UpdatedProfilePage = ({ updatedProfile }) => {
   return (
     <div>
-      <h1>Updated Profile Page</h1>
-      <p>Your profile has been updated!</p>
+      <h1>Profile Updated!</h1>
+      <ProfileCard profile={updatedProfile} />
     </div>
   );
 };

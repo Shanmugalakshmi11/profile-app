@@ -1,20 +1,27 @@
-// ProfilePage.js
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UpdatedProfilePage from "./UpdatedProfilePage";
+import ProfileCard from "./ProfileCard"; // Import ProfileCard component
 import "./ProfilePage.css";
 
 const ProfilePage = ({ onProfileUpdate }) => {
   const [profile, setProfile] = useState({
-    username: "JohnDoe",
-    fullName: "John Doe",
-    email: "john.doe@example.com",
-    bio: "Web Developer",
-    avatar: "https://example.com/avatar.jpg",
+    username: "",
+    fullName: "",
+    email: "",
+    bio: "",
+    avatar: "",
   });
 
   const [newAvatar, setNewAvatar] = useState(null);
   const [isProfileUpdated, setIsProfileUpdated] = useState(false);
+
+  useEffect(() => {
+    // Fetch profile data from an API or other data source
+    fetch("https://api.example.com/profile")
+      .then((response) => response.json())
+      .then((data) => setProfile(data))
+      .catch((error) => console.error("Error fetching profile data:", error));
+  }, []); // Empty dependency array ensures the effect runs only once on component mount
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -45,26 +52,43 @@ const ProfilePage = ({ onProfileUpdate }) => {
         <UpdatedProfilePage updatedProfile={profile} />
       ) : (
         <>
-          <h1>Profile Page</h1>
           <div className="avatar-container">
             <img src={avatarUrl} alt="User Avatar" className="avatar" />
             <input type="file" accept="image/*" onChange={handleFileChange} />
           </div>
           <div className="profile-info">
             <label>Username:</label>
-            <p>{profile.username}</p>
-          </div>
-          <div className="profile-info">
+            <input
+              type="text"
+              value={profile.username}
+              onChange={(e) =>
+                setProfile({ ...profile, username: e.target.value })
+              }
+            />
+
             <label>Full Name:</label>
-            <p>{profile.fullName}</p>
-          </div>
-          <div className="profile-info">
+            <input
+              type="text"
+              value={profile.fullName}
+              onChange={(e) =>
+                setProfile({ ...profile, fullName: e.target.value })
+              }
+            />
+
             <label>Email:</label>
-            <p>{profile.email}</p>
-          </div>
-          <div className="profile-info">
+            <input
+              type="text"
+              value={profile.email}
+              onChange={(e) =>
+                setProfile({ ...profile, email: e.target.value })
+              }
+            />
+
             <label>Bio:</label>
-            <p>{profile.bio}</p>
+            <textarea
+              value={profile.bio}
+              onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+            />
           </div>
           <button className="update-button" onClick={handleUpdateProfile}>
             Update Profile
