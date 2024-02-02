@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProfileCard.css";
 
 const ProfileCard = ({ profile }) => {
@@ -15,6 +15,11 @@ const ProfileCard = ({ profile }) => {
     // Open the default email client with the pre-filled email
     window.location.href = mailtoLink;
   };
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const handleToggleFollow = () => {
+    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+  };
   // Accept profile data as a prop
   return (
     <div className="profile-card">
@@ -24,10 +29,18 @@ const ProfileCard = ({ profile }) => {
         <h2 className="name">{profile.fullName}</h2>
         <p className="bio">{profile.bio}</p>
         <p className="email">{profile.email}</p>
+        <p>{isFollowing ? "Follows you" : "Not following"}</p>
       </div>
       <div className="contact-me">
         <button className="contact-button" onClick={handleContactMe}>
           Contact Me
+        </button>{" "}
+        <br></br>
+        <button
+          className={isFollowing ? "unfollow-button" : "follow-button"}
+          onClick={handleToggleFollow}
+        >
+          {isFollowing ? "Unfollow" : "Follow"}
         </button>
       </div>
     </div>
